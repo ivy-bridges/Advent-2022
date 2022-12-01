@@ -1,0 +1,17 @@
+cabal-version:      2.4
+name:               Advent2022
+version:            0.1.0.0
+author:             ivy
+maintainer:         ivy.v.bridges@gmail.com
+
+
+
+executable Advent2022
+    main-is: Main.hs
+    
+    other-modules:  Day1
+    build-depends:  base
+    hs-source-dirs: app, solutions
+    
+    default-language: Haskell2010
+
