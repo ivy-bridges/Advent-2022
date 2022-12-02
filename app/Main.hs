@@ -2,9 +2,10 @@ module Main where
 
 
 import qualified Day1 (solve)
+import qualified Day2 (solve)
 
 solutions :: [IO ()]
-solutions = [Day1.solve]
+solutions = [Day1.solve, Day2.solve]
 
 
 main :: IO ()
