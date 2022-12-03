@@ -3,35 +3,45 @@ module Day3 where
 import Data.List
 import Data.Maybe
 
+
+
 -- cuts a rucksack in half to get the two compartments
 halves :: String -> (String , String)
 halves rucksack = splitAt ((length rucksack) `div` 2) rucksack
 
+-- returns the item shared by both halves of a rucksack
 sharedItem :: String -> Char
-sharedItem sack = head $ intersect firstSack secondSack
-    where firstSack  = fst $ halves sack
-          secondSack = snd $ halves sack
+sharedItem rucksack = head $ intersect firstSack secondSack
+    where firstSack  = fst $ halves rucksack
+          secondSack = snd $ halves rucksack
 
+-- returns the priority score of a given item
 priority :: Char -> Int
-priority chr = 1 + (fromMaybe 0 $ elemIndex chr priorities)
+priority item = 1 + (fromMaybe 0 $ elemIndex item priorities)
     where priorities = ['a'..'z'] ++ ['A'..'Z']
 
-triples :: [String] -> [[String]]
-triples [] = []
-triples xs = (take 3 xs) : (triples (drop 3 xs))
+-- groups the elves into groups of 3
+triplets :: [String] -> [[String]]
+triplets [] = []
+triplets xs = (take 3 xs) : (triplets (drop 3 xs))
 
-tripleShared :: [String] -> Char
-tripleShared [a,b,c] = head $ intersect (intersect a b) c
+-- returns the item shared by all three members of a triple
+tripletShared :: [String] -> Char
+tripletShared [a,b,c] = head $ intersect (intersect a b) c
 
 solve :: IO ()
 solve = do
     input <- readFile "input/Day3.txt"
     
     let rucksacks = lines input
+    
+        -- first puzzle is to find the total priority of each elf's shared item
         totalPriorities = sum $ map (priority . sharedItem) rucksacks
         
-        tripleGroups = triples rucksacks
-        totalBadgePriorities = sum $ map (priority . tripleShared) tripleGroups
+        -- second puzzle is to find the total priority of each triple's badge
+        -- the badge of a triple is the item they all share
+        tripletGroups = triplets rucksacks
+        totalBadgePriorities = sum $ map (priority . tripletShared) tripletGroups
         
-    putStrLn $ "First  Answer : " ++ show totalPriorities
-    putStrLn $ "Second Answer : " ++ show totalBadgePriorities 
+    putStrLn $ "First  Solution:\t" ++ show totalPriorities
+    putStrLn $ "Second Solution:\t" ++ show totalBadgePriorities 
