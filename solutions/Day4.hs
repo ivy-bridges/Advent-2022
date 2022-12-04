@@ -17,7 +17,7 @@ toRange :: String -> (Int, Int)
 toRange assignment = (read start, read end)
     where (start, end) = splitAtChar '-' assignment
 
--- given a pair of ranges, test whether one contaisn the other          
+-- given a pair of ranges, test whether one contains the other          
 testContains :: (String, String) -> Bool
 testContains (firstAssignment, secondAssignment)
     | first < second = (firstEnd >= secondEnd)
