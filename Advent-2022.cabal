@@ -9,7 +9,7 @@ maintainer:         ivy.v.bridges@gmail.com
 executable Advent2022
     main-is: Main.hs
     
-    other-modules:  Day1, Day2, Day3
+    other-modules:  Day1, Day2, Day3, Day4
     build-depends:  base
     hs-source-dirs: app, solutions
     
