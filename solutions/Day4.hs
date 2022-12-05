@@ -5,11 +5,10 @@ import Data.Maybe
 
 
 
--- splits a string at a character, then removes the character from the second item
+-- splits a string at a character, and removes the character from the second item
 splitAtChar :: Char -> String -> (String, String)
-splitAtChar chr str = (firstItem, secondItem)
-    where firstItem = fst $ break (==chr) str
-          secondItem = tail $ snd $ break (==chr) str
+splitAtChar chr str = (firstItem, tail secondItem)
+    where (firstItem, secondItem) = break (==chr) str
           
 -- takes an elf's section assignment and returns the starting and ending sections  
 -- sections are split at a - character        
@@ -45,7 +44,7 @@ solve = do
         -- pairs are split at a , character
         parsedPairs = map (splitAtChar ',') pairs
         
-        -- first puzzle is to count the number of pairs where one contins the other
+        -- first puzzle is to count the number of pairs where one contains the other
         containedPairs = filter (testContains) parsedPairs
         
         -- second puzzle is to count the number of pairs where one overlaps with the other
