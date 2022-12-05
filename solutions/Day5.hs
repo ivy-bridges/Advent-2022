@@ -10,6 +10,16 @@ type Dock = [Stack]
 type CraneMove = (Int -> (Stack, Stack) -> (Stack, Stack))
 
 
+-- given a set of stacks, like
+-- [N]    
+-- [Z] [M] [P]
+-- returns ["NZ","M","P"]
+readInitialDock :: [String] -> Dock
+readInitialDock str = map (dropWhile (==' ')) stacks
+    where stacks  = filter (\c -> last c `elem` ['A'..'Z']) columns
+          columns = transpose str
+
+
 -- moves a single crate according to the rules of CrateMover 9000
 moveCrate :: (Stack, Stack) -> (Stack, Stack)
 moveCrate (first, second) = (tail first, box:second)
@@ -62,8 +72,10 @@ solve :: IO ()
 solve = do
     input <- readFile "input/Day5.txt"
     
-    let instructions = drop 10 (lines input)
-        initialDock = ["FGVRJLD","SJHVBMPT","CPGDFMHV","QGNPDM","FNHLJ","ZTGDQVFN","LBDF","NDVSBJM","DLG"] 
+    let dockInfo     = takeWhile (not . elem '1') (lines input)
+        instructions = dropWhile (not . elem 'm') (lines input)
+        
+        initialDock  = readInitialDock dockInfo
         
         finalDock = foldl parseCrane initialDock instructions
         finalTops = map head finalDock
