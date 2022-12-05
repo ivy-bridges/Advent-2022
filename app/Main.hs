@@ -5,9 +5,10 @@ import qualified Day1 (solve)
 import qualified Day2 (solve)
 import qualified Day3 (solve)
 import qualified Day4 (solve)
+import qualified Day5 (solve)
 
 solutions :: [IO ()]
-solutions = [Day1.solve, Day2.solve, Day3.solve, Day4.solve]
+solutions = [Day1.solve, Day2.solve, Day3.solve, Day4.solve, Day5.solve]
 
 
 main :: IO ()
